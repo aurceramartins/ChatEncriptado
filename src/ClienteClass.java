@@ -62,17 +62,6 @@ public class ClienteClass extends Thread {
         System.out.println("Mensaje enviado");
 
     }
-
-    public static void leerMensajes() throws IOException {
-        InputStream is = clientSocket.getInputStream();
-
-        byte[] mensaje = new byte[200];
-        is.read(mensaje);
-        System.out.println("Mensaje recibido: " + new String(mensaje));
-        Cliente.txtAreaCliente.setText(new String(mensaje));
-
-    }
-
     public static void terminarChat() throws IOException {
         System.out.println("Cerrando el socket cliente");
         clientSocket.close();
