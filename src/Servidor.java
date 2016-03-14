@@ -100,12 +100,9 @@ public class Servidor extends javax.swing.JFrame {
 
     private void btnCyCServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCyCServerActionPerformed
         try {
-            txtAreaServidor.setText("nabucodonosorcito  cyc");
-            //Cliente.txtAreaCliente.setText("nabucodonosorcito  cyc"); 
-            ChastPSP.infinito=false;
+            ChastPSP.escribirMensajes("nabucodonosorcito  cyc");
             ChastPSP.terminarChat();
-            //this.setVisible(false);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }

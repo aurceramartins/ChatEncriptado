@@ -1,5 +1,4 @@
 
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
@@ -24,9 +23,10 @@ public class Cliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtAreaCliente = new javax.swing.JTextField();
         txtCliente = new javax.swing.JTextField();
         btnCyCCliente = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtAreaCliente = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,24 +48,28 @@ public class Cliente extends javax.swing.JFrame {
             }
         });
 
+        txtAreaCliente.setColumns(20);
+        txtAreaCliente.setRows(5);
+        jScrollPane1.setViewportView(txtAreaCliente);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(txtAreaCliente)
             .addComponent(txtCliente)
             .addGroup(layout.createSequentialGroup()
                 .addGap(295, 295, 295)
                 .addComponent(btnCyCCliente)
                 .addContainerGap(348, Short.MAX_VALUE))
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtAreaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCyCCliente)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -91,11 +95,10 @@ public class Cliente extends javax.swing.JFrame {
 
     private void btnCyCClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCyCClienteActionPerformed
         try {
-            txtAreaCliente.setText("nabucodonosorcito  cyc");
-            //Servidor.txtAreaServidor.setText("nabucodonosorcito  cyc");
-            //this.setVisible(false);
+
+            ClienteClass.escribirMensaje("nabucodonosorcito");
             ClienteClass.terminarChat();
-            
+
         } catch (IOException ex) {
             Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
         }    }//GEN-LAST:event_btnCyCClienteActionPerformed
@@ -103,7 +106,8 @@ public class Cliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCyCCliente;
-    public static javax.swing.JTextField txtAreaCliente;
+    private javax.swing.JScrollPane jScrollPane1;
+    public static javax.swing.JTextArea txtAreaCliente;
     public static javax.swing.JTextField txtCliente;
     // End of variables declaration//GEN-END:variables
 }

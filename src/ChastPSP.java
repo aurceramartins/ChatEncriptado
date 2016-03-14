@@ -63,7 +63,8 @@ public class ChastPSP extends Thread {
                 is.read(mensaje);
                 System.out.println("Mensaje recibido: " + new String(mensaje));
                 String Area = Servidor.txtAreaServidor.getText();
-                Servidor.txtAreaServidor.setText(Area+"\n"+new String(mensaje));
+                Servidor.txtAreaServidor.setText(Area + "\n" + new String(mensaje));
+                Cliente.txtAreaCliente.setText(Area + "\n" + new String(mensaje));
 
             }
 
@@ -93,9 +94,11 @@ public class ChastPSP extends Thread {
         System.out.println("Terminado");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Servidor ventana = new Servidor();
         ventana.setVisible(true);
+        Cliente ventanacli = new Cliente();
+        ventanacli.setVisible(true);
 
     }
 }

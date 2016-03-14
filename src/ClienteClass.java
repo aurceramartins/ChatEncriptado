@@ -57,6 +57,7 @@ public class ClienteClass extends Thread {
                 System.out.println("Mensaje recibido: " + new String(mensaje));
                 String Area = Cliente.txtAreaCliente.getText();
                 Cliente.txtAreaCliente.setText(Area + "\n" + new String(mensaje));
+                Servidor.txtAreaServidor.setText(Area + "\n" + new String(mensaje));
             }
 
         } catch (Exception e) {
@@ -81,8 +82,4 @@ public class ClienteClass extends Thread {
         System.out.println("Terminado");
     }
 
-    public static void main(String[] args) throws IOException {
-        Cliente ventana = new Cliente();
-        ventana.setVisible(true);
-    }
 }
