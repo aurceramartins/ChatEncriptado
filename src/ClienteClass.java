@@ -1,9 +1,12 @@
 
+import com.sun.security.ntlm.Client;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
+import javax.net.ssl.SSLServerSocketFactory;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 
@@ -13,7 +16,6 @@ public class ClienteClass extends Thread {
     public static SSLSocketFactory SocketFactory;
     public static Socket clientSocket;
     public static InetSocketAddress addr;
-    
 
     public ClienteClass(String name) {
         super(name);
@@ -35,17 +37,26 @@ public class ClienteClass extends Thread {
 
             System.out.println("Estableciendo la conexion");
             addr = new InetSocketAddress("localhost", 5555);
-            clientSocket.connect(addr);        
-            
+            clientSocket.connect(addr);
 
-            
+            SSLServerSocketFactory serverClientFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+            ServerSocket serverSocket = serverClientFactory.createServerSocket();
+
+            InetSocketAddress addr2 = new InetSocketAddress("localhost", 5554);
+            serverSocket.bind(addr2);
+
+            System.out.println("Aceptando conexiones");
+            SSLSocket newSocket1 = (SSLSocket) serverSocket.accept();
+            System.out.println("Conexi�n recibida");
+
             while (true) {
-                InputStream is = clientSocket.getInputStream();
+                InputStream is = newSocket1.getInputStream();
 
                 byte[] mensaje = new byte[200];
                 is.read(mensaje);
                 System.out.println("Mensaje recibido: " + new String(mensaje));
-                Cliente.txtAreaCliente.setText(new String(mensaje));
+                String Area = Cliente.txtAreaCliente.getText();
+                Cliente.txtAreaCliente.setText(Area + "\n" + new String(mensaje));
             }
 
         } catch (Exception e) {
@@ -62,6 +73,7 @@ public class ClienteClass extends Thread {
         System.out.println("Mensaje enviado");
 
     }
+
     public static void terminarChat() throws IOException {
         System.out.println("Cerrando el socket cliente");
         clientSocket.close();

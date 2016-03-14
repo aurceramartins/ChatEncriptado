@@ -4,10 +4,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 import static javafx.scene.input.KeyCode.O;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLServerSocket;
 import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocketFactory;
 
 public class ChastPSP extends Thread {
 
@@ -17,6 +19,8 @@ public class ChastPSP extends Thread {
     public static ServerSocket serverSocket;
     public static boolean cerrar = false;
     public static boolean infinito = true;
+    public static SSLSocketFactory SocketFactory2;
+    public static Socket servSocket;
 
     public ChastPSP(String name) {
         super(name);
@@ -44,13 +48,22 @@ public class ChastPSP extends Thread {
             SSLSocket newSocket = (SSLSocket) serverSocket.accept();
             System.out.println("Conexi�n recibida");
 
+            System.out.println("Obteniendo factoria de sockets cliente");
+            SSLSocketFactory SocketFactory2 = (SSLSocketFactory) SSLSocketFactory.getDefault();
+            System.out.println("Creando socket cliente");
+            servSocket = SocketFactory2.createSocket();
+            System.out.println("Estableciendo la conexion");
+            InetSocketAddress addr2 = new InetSocketAddress("localhost", 5554);
+            servSocket.connect(addr2);
+
             while (infinito == true) {
                 InputStream is = newSocket.getInputStream();
 
                 byte[] mensaje = new byte[200];
                 is.read(mensaje);
                 System.out.println("Mensaje recibido: " + new String(mensaje));
-                Servidor.txtAreaServidor.setText(new String(mensaje));
+                String Area = Servidor.txtAreaServidor.getText();
+                Servidor.txtAreaServidor.setText(Area+"\n"+new String(mensaje));
 
             }
 
@@ -60,7 +73,7 @@ public class ChastPSP extends Thread {
     }
 
     public static void escribirMensajes(String mensaje) throws IOException {
-        OutputStream os = newSocket.getOutputStream();
+        OutputStream os = servSocket.getOutputStream();
 
         System.out.println("Enviando mensaje");
         os.write(mensaje.getBytes());
