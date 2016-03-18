@@ -29,11 +29,13 @@ public class ChastPSP extends Thread {
     @Override
     public void run() {
         try {
-            System.setProperty("javax.net.ssl.keyStore", "C://Program Files//Java//jre1.8.0_71//bin//serverKey.jks");
+            // indicamos dónde están los almacenes de certificados y certificados de confianza            
+            System.setProperty("javax.net.ssl.keyStore", "src//serverKey.jks");
             System.setProperty("javax.net.ssl.keyStorePassword", "servpass");
-            System.setProperty("javax.net.ssl.trustStore", "C://Program Files//Java//jre1.8.0_71//bin//serverTrustedCerts.jks");
+            System.setProperty("javax.net.ssl.trustStore", "src//serverTrustedCerts.jks");
             System.setProperty("javax.net.ssl.trustStorePassword", "clientpass");
 
+            //Creamos sockets uno para leer(5555) y otro para escribir(5554)
             System.out.println("Obteniendo factoria de sockets servidor");
             SSLServerSocketFactory serverSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
 
@@ -56,6 +58,7 @@ public class ChastPSP extends Thread {
             InetSocketAddress addr2 = new InetSocketAddress("localhost", 5554);
             servSocket.connect(addr2);
 
+            //Bucle infinito para que el programa este escuchando siempre las llamadas y asi poder leer varios correos
             while (infinito == true) {
                 InputStream is = newSocket.getInputStream();
 
@@ -63,8 +66,8 @@ public class ChastPSP extends Thread {
                 is.read(mensaje);
                 System.out.println("Mensaje recibido: " + new String(mensaje));
                 String Area = Servidor.txtAreaServidor.getText();
-                Servidor.txtAreaServidor.setText(Area + "\n" + new String(mensaje));
-                Cliente.txtAreaCliente.setText(Area + "\n" + new String(mensaje));
+                Servidor.txtAreaServidor.setText(Area + "\n" + "Servidor > " + new String(mensaje));
+                Cliente.txtAreaCliente.setText(Area + "\n" + "Servidor > " + new String(mensaje));
 
             }
 
@@ -73,6 +76,7 @@ public class ChastPSP extends Thread {
         }
     }
 
+    //Metodo para escribir
     public static void escribirMensajes(String mensaje) throws IOException {
         OutputStream os = servSocket.getOutputStream();
 
@@ -82,6 +86,7 @@ public class ChastPSP extends Thread {
 
     }
 
+    //Metodo para cerrar conexiones
     public static void terminarChat() throws IOException {
         System.out.println("Cerrando el nuevo Socket");
 
@@ -94,6 +99,7 @@ public class ChastPSP extends Thread {
         System.out.println("Terminado");
     }
 
+    //En el main hacemos visibles las dos ventanas 
     public static void main(String[] args) throws IOException {
         Servidor ventana = new Servidor();
         ventana.setVisible(true);

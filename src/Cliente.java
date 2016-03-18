@@ -10,6 +10,7 @@ public class Cliente extends javax.swing.JFrame {
 
     private ClienteClass cliente = null;
 
+    //Iniciamos el hilo Cliente en el constructor
     public Cliente() throws IOException {
         initComponents();
         if (cliente == null) {
@@ -80,6 +81,7 @@ public class Cliente extends javax.swing.JFrame {
     private void txtClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClienteActionPerformed
     }//GEN-LAST:event_txtClienteActionPerformed
 
+    //Texfield, cuando pulsas enter envia el mensaje y se pone en blanco para seguir escribiendo
     private void txtClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyPressed
 
         if (evt.getKeyCode() == 10) {
@@ -93,6 +95,7 @@ public class Cliente extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtClienteKeyPressed
 
+    //Boton para cerrar conexion manda el mensaje nabucodonosorcito 
     private void btnCyCClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCyCClienteActionPerformed
         try {
 

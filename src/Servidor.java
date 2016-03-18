@@ -7,6 +7,7 @@ public class Servidor extends javax.swing.JFrame {
 
     private ChastPSP server = null;
 
+    //En el constructor iniciamos el hilo servidor 
     public Servidor() {
         initComponents();
         if (server == null) {
@@ -86,6 +87,7 @@ public class Servidor extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtAreaServidorKeyPressed
 
+    //Texfield, cuando pulsas enter envia el mensaje y se pone en blanco para seguir escribiendo
     private void txtServidorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtServidorKeyPressed
         if (evt.getKeyCode() == 10) {
             try {
@@ -98,6 +100,7 @@ public class Servidor extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtServidorKeyPressed
 
+//Boton para cerrar conexion manda el mensaje nabucodonosorcito    
     private void btnCyCServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCyCServerActionPerformed
         try {
             ChastPSP.escribirMensajes("nabucodonosorcito  cyc");

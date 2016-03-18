@@ -24,11 +24,13 @@ public class ClienteClass extends Thread {
     @Override
     public void run() {
         try {
-            System.setProperty("javax.net.ssl.keyStore", "C://Program Files//Java//jre1.8.0_71//bin//serverKey.jks");
+            // indicamos dónde están los almacenes de certificados y certificados de confianza            
+            System.setProperty("javax.net.ssl.keyStore", "src//serverKey.jks");
             System.setProperty("javax.net.ssl.keyStorePassword", "servpass");
-            System.setProperty("javax.net.ssl.trustStore", "C://Program Files//Java//jre1.8.0_71//bin//clientTrustedCerts.jks");
+            System.setProperty("javax.net.ssl.trustStore", "src//clientTrustedCerts.jks");
             System.setProperty("javax.net.ssl.trustStorePassword", "clientpass");
 
+            //Creamos sockets uno para leer(5554) y otro para escribir(5555)
             System.out.println("Obteniendo factoria de sockets cliente");
             SocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 
@@ -49,6 +51,7 @@ public class ClienteClass extends Thread {
             SSLSocket newSocket1 = (SSLSocket) serverSocket.accept();
             System.out.println("Conexi�n recibida");
 
+            //Bucle infinito para que el programa este escuchando siempre las llamadas y asi poder leer varios correos
             while (true) {
                 InputStream is = newSocket1.getInputStream();
 
@@ -56,14 +59,15 @@ public class ClienteClass extends Thread {
                 is.read(mensaje);
                 System.out.println("Mensaje recibido: " + new String(mensaje));
                 String Area = Cliente.txtAreaCliente.getText();
-                Cliente.txtAreaCliente.setText(Area + "\n" + new String(mensaje));
-                Servidor.txtAreaServidor.setText(Area + "\n" + new String(mensaje));
+                Cliente.txtAreaCliente.setText(Area + "\n" + "Cliente > " + new String(mensaje));
+                Servidor.txtAreaServidor.setText(Area + "\n" + "Cliente > " + new String(mensaje));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+//Metodo para escribir
 
     public static void escribirMensaje(String mensaje) throws IOException {
         OutputStream os = clientSocket.getOutputStream();
@@ -74,6 +78,7 @@ public class ClienteClass extends Thread {
         System.out.println("Mensaje enviado");
 
     }
+//Metodo para cerrar conexiones
 
     public static void terminarChat() throws IOException {
         System.out.println("Cerrando el socket cliente");
